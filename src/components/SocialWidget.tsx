@@ -61,11 +61,11 @@ const SocialWidget: React.FC<SocialWidgetProps> = ({ app, onClick, isActive }) =
   const getAppColor = () => {
     switch (app) {
       case 'whatsapp':
-        return 'bg-gradient-to-br from-green-400 to-green-600 hover:from-green-500 hover:to-green-700';
+        return 'bg-gradient-to-br from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-600 active:to-green-800';
       case 'instagram':
-        return 'bg-gradient-to-br from-pink-500 via-purple-500 to-yellow-500 hover:from-pink-600 hover:via-purple-600 hover:to-yellow-600';
+        return 'bg-gradient-to-br from-pink-500 via-purple-500 to-yellow-500 hover:from-pink-600 hover:via-purple-600 hover:to-yellow-600 active:from-pink-700 active:via-purple-700 active:to-yellow-700';
       case 'facebook':
-        return 'bg-gradient-to-br from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800';
+        return 'bg-gradient-to-br from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 active:from-blue-700 active:to-blue-900';
       default:
         return 'bg-gray-500';
     }
@@ -74,19 +74,19 @@ const SocialWidget: React.FC<SocialWidgetProps> = ({ app, onClick, isActive }) =
   return (
     <div 
       className={cn(
-        'relative rounded-xl p-6 transition-all duration-300 cursor-pointer transform hover:scale-105',
+        'relative rounded-xl p-3 transition-all duration-150 cursor-pointer transform active:scale-95',
         getAppColor(),
-        isActive ? 'ring-4 ring-white ring-opacity-60 scale-105' : ''
+        isActive ? 'ring-2 ring-white ring-opacity-60 scale-105' : ''
       )}
       onClick={onClick}
     >
       <div className="flex flex-col items-center text-white">
-        <div className="text-4xl mb-3">
+        <div className="text-3xl mb-1">
           {getIcon()}
         </div>
-        <h3 className="text-xl font-semibold">{getAppName()}</h3>
+        <h3 className="text-sm font-semibold">{getAppName()}</h3>
         {isActive && (
-          <div className="mt-2 animate-pulse text-sm">Active</div>
+          <div className="mt-1 animate-pulse text-xs">Active</div>
         )}
       </div>
     </div>

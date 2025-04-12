@@ -7,20 +7,19 @@ const Index: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200">
       <AppHeader />
-      <main className="container mx-auto py-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-6">
-            <h2 className="text-2xl font-semibold mb-6 text-gray-800">Your Social Widgets</h2>
-            <p className="text-gray-600 mb-6">
-              Click on any widget below to activate it. In a full implementation, 
-              this would open the respective app or embed its functionality.
+      <main className="container mx-auto py-4 px-4">
+        <div className="mx-auto">
+          <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg p-4">
+            <h2 className="text-xl font-semibold mb-3 text-gray-800">Your Social Apps</h2>
+            <p className="text-gray-600 mb-4 text-sm">
+              Tap on any app below to open it.
             </p>
             <WidgetGrid />
           </div>
         </div>
       </main>
-      <footer className="container mx-auto py-6 text-center text-gray-500">
-        <p>© 2025 Social Widget Hub. All rights reserved.</p>
+      <footer className="container mx-auto py-4 text-center text-gray-500 text-xs">
+        <p>© 2025 Social Widget Hub</p>
       </footer>
     </div>
   );
