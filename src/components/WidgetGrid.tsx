@@ -11,16 +11,42 @@ const WidgetGrid: React.FC = () => {
   const handleWidgetClick = (app: SocialApp) => {
     setActiveApp(app);
     
-    // In a real mobile app, this would launch the native app
-    console.log(`Opening ${app}...`);
+    let appUrl = '';
+    switch (app) {
+      case 'whatsapp':
+        appUrl = 'whatsapp://';
+        break;
+      case 'instagram':
+        appUrl = 'instagram://';
+        break;
+      case 'facebook':
+        appUrl = 'fb://';
+        break;
+    }
+    
+    console.log(`Opening ${app} app with URL: ${appUrl}`);
     toast({
       title: `Opening ${app}`,
-      description: "Launching external application...",
+      description: "Launching native app...",
       duration: 2000,
     });
     
-    // For a full implementation, this would use Capacitor plugins to open the app
-    // Example: Capacitor.Plugins.AppLauncher.openUrl({ url: 'whatsapp://' });
+    // For web testing only - will attempt to open app if installed
+    window.location.href = appUrl;
+    
+    // Fallback for web testing - if app doesn't open in 1 second, redirect to website
+    setTimeout(() => {
+      const webUrls: Record<SocialApp, string> = {
+        whatsapp: 'https://web.whatsapp.com/',
+        instagram: 'https://www.instagram.com/',
+        facebook: 'https://www.facebook.com/'
+      };
+      
+      // Check if we're still on the same page (app didn't open)
+      if (document.visibilityState !== 'hidden') {
+        window.location.href = webUrls[app];
+      }
+    }, 1000);
   };
 
   return (
@@ -42,19 +68,6 @@ const WidgetGrid: React.FC = () => {
           isActive={activeApp === 'facebook'} 
         />
       </div>
-      
-      {activeApp && (
-        <div className="mt-6 p-4 bg-white rounded-xl shadow-lg animate-fade-in">
-          <h2 className="text-xl font-bold mb-3 text-center capitalize">
-            {activeApp}
-          </h2>
-          <div className="h-48 flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg">
-            <p className="text-gray-500 text-center text-sm px-2">
-              Tapping this would open the {activeApp} app on your device.
-            </p>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
