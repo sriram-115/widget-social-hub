@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Facebook, Instagram } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -32,57 +31,21 @@ interface BottomNavigationProps {
 }
 
 const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeApp, onAppSelect }) => {
-  const openExternalApp = (app: SocialApp) => {
+  const handleAppSelect = (app: SocialApp) => {
     onAppSelect(app);
     
-    let appUrl = '';
-    switch (app) {
-      case 'whatsapp':
-        appUrl = 'whatsapp://';
-        break;
-      case 'instagram':
-        appUrl = 'instagram://';
-        break;
-      case 'facebook':
-        appUrl = 'fb://';
-        break;
-    }
-    
-    // This will be replaced with Capacitor's App Launcher in a real mobile app
-    console.log(`Opening ${app} app with URL: ${appUrl}`);
     toast({
-      title: `Opening ${app}`,
-      description: "Launching native app...",
+      title: `Switched to ${app}`,
+      description: "Now viewing app content",
       duration: 2000,
     });
-    
-    // In a full implementation with Capacitor:
-    // import { App } from '@capacitor/app';
-    // App.openUrl({ url: appUrl });
-    
-    // For web testing only - will attempt to open app if installed
-    window.location.href = appUrl;
-    
-    // Fallback for web testing - if app doesn't open in 1 second, redirect to website
-    setTimeout(() => {
-      const webUrls: Record<SocialApp, string> = {
-        whatsapp: 'https://web.whatsapp.com/',
-        instagram: 'https://www.instagram.com/',
-        facebook: 'https://www.facebook.com/'
-      };
-      
-      // Check if we're still on the same page (app didn't open)
-      if (document.visibilityState !== 'hidden') {
-        window.location.href = webUrls[app];
-      }
-    }, 1000);
   };
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t border-gray-200">
       <div className="flex justify-around items-center h-16">
         <button 
-          onClick={() => openExternalApp('whatsapp')} 
+          onClick={() => handleAppSelect('whatsapp')} 
           className={cn(
             "flex flex-col items-center justify-center w-full h-full transition-colors",
             activeApp === 'whatsapp' ? 'text-green-600' : 'text-gray-500'
@@ -93,7 +56,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeApp, onAppSel
         </button>
         
         <button 
-          onClick={() => openExternalApp('instagram')} 
+          onClick={() => handleAppSelect('instagram')} 
           className={cn(
             "flex flex-col items-center justify-center w-full h-full transition-colors",
             activeApp === 'instagram' ? 'text-pink-600' : 'text-gray-500'
@@ -104,7 +67,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeApp, onAppSel
         </button>
         
         <button 
-          onClick={() => openExternalApp('facebook')} 
+          onClick={() => handleAppSelect('facebook')} 
           className={cn(
             "flex flex-col items-center justify-center w-full h-full transition-colors",
             activeApp === 'facebook' ? 'text-blue-600' : 'text-gray-500'

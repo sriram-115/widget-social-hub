@@ -1,52 +1,24 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import SocialWidget from './SocialWidget';
 import { toast } from '@/components/ui/use-toast';
 
 type SocialApp = 'whatsapp' | 'instagram' | 'facebook';
 
-const WidgetGrid: React.FC = () => {
-  const [activeApp, setActiveApp] = useState<SocialApp | null>(null);
+interface WidgetGridProps {
+  activeApp: SocialApp | null;
+  onAppSelect: (app: SocialApp) => void;
+}
 
+const WidgetGrid: React.FC<WidgetGridProps> = ({ activeApp, onAppSelect }) => {
   const handleWidgetClick = (app: SocialApp) => {
-    setActiveApp(app);
+    onAppSelect(app);
     
-    let appUrl = '';
-    switch (app) {
-      case 'whatsapp':
-        appUrl = 'whatsapp://';
-        break;
-      case 'instagram':
-        appUrl = 'instagram://';
-        break;
-      case 'facebook':
-        appUrl = 'fb://';
-        break;
-    }
-    
-    console.log(`Opening ${app} app with URL: ${appUrl}`);
     toast({
-      title: `Opening ${app}`,
-      description: "Launching native app...",
+      title: `Switched to ${app}`,
+      description: "Now viewing app content",
       duration: 2000,
     });
-    
-    // For web testing only - will attempt to open app if installed
-    window.location.href = appUrl;
-    
-    // Fallback for web testing - if app doesn't open in 1 second, redirect to website
-    setTimeout(() => {
-      const webUrls: Record<SocialApp, string> = {
-        whatsapp: 'https://web.whatsapp.com/',
-        instagram: 'https://www.instagram.com/',
-        facebook: 'https://www.facebook.com/'
-      };
-      
-      // Check if we're still on the same page (app didn't open)
-      if (document.visibilityState !== 'hidden') {
-        window.location.href = webUrls[app];
-      }
-    }, 1000);
   };
 
   return (
